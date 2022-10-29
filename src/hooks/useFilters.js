@@ -19,6 +19,7 @@ export const useFilters = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSave = () => {
+    if (JSON.stringify(saveFilters).includes(JSON.stringify(filters))) return;
     if (saveFilters.length <= 4) {
       setSaveFilters([
         ...saveFilters,

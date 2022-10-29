@@ -28,7 +28,7 @@ export const Filters = () => {
           <div>
             <p className="flex justify-center "> ROVER </p>
             <select
-              defaultValue={filters.rover}
+              value={filters.rover}
               onChange={(e) =>
                 setFilters({ ...filters, rover: e.target.value })
               }
@@ -45,7 +45,7 @@ export const Filters = () => {
           <div>
             <p className="flex justify-center">CAMERA</p>
             <select
-              defaultValue={filters.camera}
+              value={filters.camera}
               onChange={(e) =>
                 setFilters({ ...filters, camera: e.target.value })
               }
