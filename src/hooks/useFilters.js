@@ -19,7 +19,7 @@ export const useFilters = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSave = () => {
-    if (saveFilters.length <= 5) {
+    if (saveFilters.length <= 4) {
       setSaveFilters([
         ...saveFilters,
         {
