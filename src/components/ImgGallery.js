@@ -1,28 +1,60 @@
-import React from "react";
-import "../index.css";
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { getPagePhotos } from "../api";
 
-export const ImgGallery = ({ photos }) => {
+export const ImgGallery = ({ filtersHook }) => {
+  const { photosArray, filters } = filtersHook;
+
+  const [photos, setPhotos] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const fetchMorePhotos = async () => {
+    const newPhotos = await getPagePhotos(filters, page + 1);
+    setPage(page + 1);
+    setPhotos((prevState) => [...prevState, ...newPhotos]);
+  };
+
+  useEffect(() => {
+    setPage(1);
+    setPhotos([...photosArray]);
+  }, [photosArray]);
+
   if (photos.length === 0)
     return (
-      <h2 className="my-32 mx-auto text-2xl">
-        Not found images... <br /> Try other filters
-      </h2>
+      <div className="flex align-middle justify-center">
+        <h3 className="my-32 text-2xl">
+          Not found images... <br /> Try other filters
+        </h3>
+      </div>
     );
   return (
-    <div className="mt-20 ml-72 w-full h-full flex flex-wrap justify-evenly">
-      {photos.map((item) => (
-        <div key={item.id} className="image-gallery-container">
-          <a
-            className="h-full"
+    <InfiniteScroll
+      dataLength={photos.length}
+      next={() => fetchMorePhotos()}
+      hasMore={true}
+      loader={""}
+    >
+      <div className="mt-20 xl:pl-72 w-10/12 h-full flex flex-wrap justify-around mx-auto">
+        {photos.map((item) => (
+          <div
             key={item.id}
-            href={item.img_src}
-            target={"_blank"}
-            rel="noreferrer"
+            className="w-96 h-96 p-2 sm:w-64 sm:h-64 lg:w-72 lg:h-72"
           >
-            <img className="w-full" src={item.img_src} alt={item.img_src}></img>
-          </a>
-        </div>
-      ))}
-    </div>
+            <a
+              className="h-full"
+              href={item.img_src}
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              <img
+                className="w-full"
+                src={item.img_src}
+                alt={"marsPhoto"}
+              ></img>
+            </a>
+          </div>
+        ))}
+      </div>
+    </InfiniteScroll>
   );
 };

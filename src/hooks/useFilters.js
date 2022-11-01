@@ -1,7 +1,6 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { useNasaApi } from "../api";
-import { getRoversData } from "../helpers";
+import { getPhotos } from "../api";
 
 export const useFilters = () => {
   const [filters, setFilters] = useState({
@@ -12,66 +11,49 @@ export const useFilters = () => {
     sol: 0,
   });
   const [saveFilters, setSaveFilters] = useState(
-    JSON.parse(localStorage.getItem("saveFilters")) || []
+    () => JSON.parse(localStorage.getItem("saveFilters")) || []
   );
-  const { getPhotos, photos } = useNasaApi();
-  const { rovers, otherCameras, curiosityCameras } = getRoversData;
+  const [photosArray, setPhotosArray] = useState([]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSave = () => {
     if (JSON.stringify(saveFilters).includes(JSON.stringify(filters))) return;
     if (saveFilters.length <= 4) {
-      setSaveFilters([
-        ...saveFilters,
-        {
-          rover: filters.rover,
-          camera: filters.camera,
-          type: filters.type,
-          earth: filters.earth,
-          sol: filters.sol,
-        },
-      ]);
+      setSaveFilters([...saveFilters, { ...filters }]);
     }
   };
 
-  const setActiveFilter = (e) => {
-    const setActive = saveFilters[e.target.parentElement.id];
-    setFilters({
-      rover: setActive.rover,
-      camera: setActive.camera,
-      type: setActive.type,
-      earth: setActive.earth,
-      sol: setActive.sol,
-    });
+  const setActiveFilter = (id) => {
+    const setActive = saveFilters[id];
+    setFilters({ ...setActive });
   };
 
-  const deleteFilter = (e) => {
+  const deleteFilter = (id) => {
     const newFilter = [...saveFilters];
-    newFilter.splice(e.target.parentElement.id, 1);
+    newFilter.splice(id, 1);
     setSaveFilters([...newFilter]);
   };
-  const deleteAllFilters = (e) => {
+  const deleteAllFilters = () => {
     localStorage.clear();
     setSaveFilters([]);
   };
 
   useEffect(() => {
-    getPhotos(filters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getData = async () => {
+      const photos = await getPhotos(filters);
+      setPhotosArray(photos);
+    };
+    getData();
   }, [filters]);
 
   useEffect(() => {
     localStorage.setItem("saveFilters", JSON.stringify(saveFilters));
   }, [saveFilters]);
+
   return {
     filters,
-    photos,
-    rovers,
-    otherCameras,
-    curiosityCameras,
     saveFilters,
+    photosArray,
     setFilters,
-    getPhotos,
     onSave,
     setActiveFilter,
     deleteFilter,

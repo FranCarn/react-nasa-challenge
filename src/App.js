@@ -1,18 +1,19 @@
 import React from "react";
 import "./index.css";
-import { Header, Filters } from "./components";
+import { Navbar, Sidebar, ImgGallery, Layout } from "./components";
+import { useFilters } from "./hooks";
 
 function App() {
+  const filtersHook = useFilters();
+
   return (
-    <>
-      <div className="stars"></div>
-      <div className="twinkling"></div>
-      <div className="clouds"></div>
-      <div className="master">
-        <Header />
-        <Filters />
+    <Layout>
+      <Navbar filtersHook={filtersHook} />
+      <div>
+        <Sidebar filtersHook={filtersHook} />
+        <ImgGallery filtersHook={filtersHook} />
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -1,1 +1,1 @@
-export * from "./hooks/useNasaApi";
+export * from "./nasaApi";
