@@ -1,5 +1,6 @@
-import moment from "moment";
 import React from "react";
+import PropTypes from "prop-types";
+import moment from "moment";
 
 export const DateFilter = ({ filters, setFilters }) => {
   return (
@@ -36,4 +37,9 @@ export const DateFilter = ({ filters, setFilters }) => {
       )}
     </div>
   );
+};
+
+DateFilter.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func,
 };

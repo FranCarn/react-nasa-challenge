@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Modal from "react-modal";
 import { FilterComponent } from "./Filters";
 import { StoreDataComponent } from "./StoredFilters";
+
 export const Navbar = ({ filtersHook }) => {
   const [isOpen, setIsOpen] = useState(false);
   const customStyles = {
@@ -64,4 +66,8 @@ export const Navbar = ({ filtersHook }) => {
       </nav>
     </>
   );
+};
+
+Navbar.propTypes = {
+  filtersHook: PropTypes.object.isRequired,
 };

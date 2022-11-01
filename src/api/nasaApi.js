@@ -1,4 +1,5 @@
 import axios from "axios";
+import PropTypes from "prop-types";
 
 export const getPhotos = async (filters, page = 1) => {
   const { rover, type, earth, sol, camera } = filters;
@@ -44,4 +45,14 @@ export const getPagePhotos = async (filters, page) => {
     console.error(err);
     return [];
   }
+};
+
+getPhotos.propTypes = {
+  filters: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
+};
+
+getPagePhotos.propTypes = {
+  filters: PropTypes.object.isRequired,
+  page: PropTypes.number.isRequired,
 };

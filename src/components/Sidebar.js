@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FilterComponent, StoreDataComponent } from "./";
 
 export const Sidebar = ({ filtersHook }) => {
@@ -12,4 +13,8 @@ export const Sidebar = ({ filtersHook }) => {
       <StoreDataComponent filtersHook={filtersHook} />
     </div>
   );
+};
+
+Sidebar.propTypes = {
+  filtersHook: PropTypes.object.isRequired,
 };

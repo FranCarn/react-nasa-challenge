@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Buttons, SavedFilters } from "./";
 
 export const StoreDataComponent = ({ filtersHook }) => {
@@ -9,9 +10,13 @@ export const StoreDataComponent = ({ filtersHook }) => {
 
       <div className={saveFilters.length !== 0 ? "block" : "hidden"}>
         {saveFilters.map((item, i) => (
-          <SavedFilters item={item} i={i} filtersHook={filtersHook} />
+          <SavedFilters key={i} item={item} i={i} filtersHook={filtersHook} />
         ))}
       </div>
     </>
   );
+};
+
+StoreDataComponent.propTypes = {
+  filtersHook: PropTypes.object.isRequired,
 };

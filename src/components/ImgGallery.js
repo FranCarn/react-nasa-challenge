@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getPagePhotos } from "../api";
 
@@ -57,4 +58,8 @@ export const ImgGallery = ({ filtersHook }) => {
       </div>
     </InfiniteScroll>
   );
+};
+
+ImgGallery.propTypes = {
+  filtersHook: PropTypes.object.isRequired,
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { CameraFilter, DateFilter, RoverFilter } from "./";
 import { getRoversData } from "../../helpers";
 
@@ -30,4 +31,7 @@ export const FilterComponent = ({ filtersHook }) => {
       </div>
     </>
   );
+};
+FilterComponent.propTypes = {
+  filtersHook: PropTypes.object.isRequired,
 };
